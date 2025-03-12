@@ -1,4 +1,4 @@
-public class Cliente{
+public class Cliente {
     private String nombre;
     private String apellido;
     private String cedula;
@@ -18,7 +18,7 @@ public class Cliente{
         this.antiguedad = antiguedad;
     }
 
-    public Cliente(){
+    public Cliente() {
 
     }
 
@@ -78,17 +78,31 @@ public class Cliente{
         this.antiguedad = antiguedad;
     }
 
-    public String cancelarMembresia(){
+    public String cancelarMembresia() {
         this.membresia = null;
 
         return "La membresia se ha cancelado";
     }
 
-    public double calcularMensualidad(){
-        
+    public double calcularMensualidad() {
+        double costoMensualidad = this.membresia.getPrecio();
+        double descuento = 0;
+
+        if (this.edad < 18) {
+            if (this.membresia.getCategoria().equals("2") || this.membresia.getCategoria().equals("3")) {
+                descuento = 0.30;
+            }
+        } else if (this.edad > 60) {
+            descuento = 0.50;
+        } else if (this.edad >= 18 && this.edad <= 60 && this.antiguedad > 15) {
+            descuento = 0.15;
+        }
+        double costoTotal = (costoMensualidad * (1 - descuento));
+
+        setMensualidad(costoTotal);
+
+        return costoTotal;
+
     }
-    
 
-
-    
 }
