@@ -1,3 +1,4 @@
+
 public class Cliente {
     private String nombre;
     private String apellido;
@@ -6,6 +7,7 @@ public class Cliente {
     private int edad;
     private double mensualidad;
     private int antiguedad;
+    private Coach coach;
 
     public Cliente(String nombre, String apellido, String cedula, Membresia membresia, int edad, double mensualidad,
             int antiguedad) {
@@ -16,6 +18,7 @@ public class Cliente {
         this.edad = edad;
         this.mensualidad = mensualidad;
         this.antiguedad = antiguedad;
+        this.coach = null;
     }
 
     public Cliente() {
@@ -78,6 +81,14 @@ public class Cliente {
         this.antiguedad = antiguedad;
     }
 
+    public Coach getCoach() {
+        return coach;
+    }
+
+    public void setCoach(Coach coach) {
+        this.coach = coach;
+    }
+
     public String cancelarMembresia() {
         this.membresia = null;
 
@@ -87,9 +98,9 @@ public class Cliente {
     public double calcularMensualidad() {
         double costoMensualidad = this.membresia.getPrecio();
         double descuento = 0;
-
+        
         if (this.edad < 18) {
-            if (this.membresia.getCategoria().equals("2") || this.membresia.getCategoria().equals("3")) {
+            if (this.membresia.getCategoria().equals("platinum") || this.membresia.getCategoria().equals("bronze")) {
                 descuento = 0.30;
             }
         } else if (this.edad > 60) {
@@ -98,6 +109,9 @@ public class Cliente {
             descuento = 0.15;
         }
         double costoTotal = (costoMensualidad * (1 - descuento));
+        if (coach!=null) {
+            costoTotal = costoTotal + 200000 + this.coach.getExperiencia() *20000;
+        }
 
         setMensualidad(costoTotal);
 
